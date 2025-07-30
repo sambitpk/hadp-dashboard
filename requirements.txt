@@ -1,7 +1,7 @@
-streamlit
-pandas
-plotly
-openpyxl
-langchain
-langchain_community
-huggingface_hub
+streamlit>=1.35.0
+pandas>=2.0.0
+plotly>=5.15.0
+openpyxl>=3.1.2
+langchain==0.3.1
+langchain_community==0.3.1
+huggingface_hub==0.24.7
