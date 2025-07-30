@@ -25,7 +25,7 @@ st.markdown("""
 # Translations for bilingual support
 translations = {
     "en": {
-        "title": "Jansahayak RTI Dashboard",
+        "title": "Jansahayak Dashboard",
         "srNo": "Sr. No.",
         "taluka": "Taluka",
         "year": "Year",
@@ -54,7 +54,7 @@ translations = {
         "chatbotError": "Chatbot unavailable: Please configure a valid Hugging Face API key with Write access or check model availability."
     },
     "mr": {
-        "title": "जनसहायक आरटीआय डॅशबोर्ड",
+        "title": "जनसहायक डॅशबोर्ड",
         "srNo": "अ. क्र.",
         "taluka": "तालुका",
         "year": "वर्ष",
