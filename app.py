@@ -51,7 +51,7 @@ translations = {
         "errorColumns": "Error: Required columns not found in the Excel file.",
         "chatbotTitle": "Jansahayak Chatbot",
         "chatbotPrompt": "Ask a question about the projects...",
-        "chatbotError": "Chatbot unavailable: Please configure a valid Hugging Face API key with Write access or check model setup."
+        "chatbotError": "Chatbot unavailable: Please configure a valid Hugging Face API key with Write access or check model availability."
     },
     "mr": {
         "title": "जनसहायक आरटीआय डॅशबोर्ड",
@@ -77,10 +77,10 @@ translations = {
         "english": "इंग्रजी",
         "marathi": "मराठी",
         "errorFile": "त्रुटी: HADP_WORK_LIST_MASTER.xlsx फाइल सापडली नाही. कृपया फाइल अपलोड करा.",
-        "errorColumns": "त्रुटी: एक्सेल फाइलमध्ये आवश्यक कॉलम्स सापडले नाहीत.",
+        "errorColumns": "त्रुटी: एक्सेल फाइलमध्ये आवश्यक कॉलम्स सापडले नाहीत。",
         "chatbotTitle": "जनसहायक चॅटबॉट",
         "chatbotPrompt": "प्रकल्पांबद्दल प्रश्न विचारा...",
-        "chatbotError": "चॅटबॉट उपलब्ध नाही: कृपया Write परवानगीसह वैध Hugging Face API की कॉन्फिगर करा किंवा मॉडेल सेटअप तपासा."
+        "chatbotError": "चॅटबॉट उपलब्ध नाही: कृपया Write परवानगीसह वैध Hugging Face API की कॉन्फिगर करा किंवा मॉडेल उपलब्धता तपासा."
     }
 }
 
@@ -147,9 +147,10 @@ def get_chatbot_response(prompt, df, lang):
         # Set up Hugging Face Hub
         os.environ["HUGGINGFACEHUB_API_TOKEN"] = api_key
         llm = HuggingFaceHub(
-            repo_id="google/flan-t5-small",
+            repo_id="facebook/bart-large",
             task="text2text-generation",
-            model_kwargs={"temperature": 0.5, "max_length": 150}
+            model_kwargs={"temperature": 0.5, "max_length": 150},
+            huggingfacehub_api_token=api_key
         )
 
         # Summarize data for context
