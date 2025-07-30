@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from langchain_community.llms import HuggingFaceHub
+from langchain_community.llms import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
 import os
 import numpy as np
@@ -25,7 +25,7 @@ st.markdown("""
 # Translations for bilingual support
 translations = {
     "en": {
-        "title": "Jansahayak Dashboard",
+        "title": "Jansahayak RTI Dashboard",
         "srNo": "Sr. No.",
         "taluka": "Taluka",
         "year": "Year",
@@ -54,7 +54,7 @@ translations = {
         "chatbotError": "Chatbot unavailable: Please configure a valid Hugging Face API key with Write access or check model availability."
     },
     "mr": {
-        "title": "जनसहायक डॅशबोर्ड",
+        "title": "जनसहायक आरटीआय डॅशबोर्ड",
         "srNo": "अ. क्र.",
         "taluka": "तालुका",
         "year": "वर्ष",
@@ -144,12 +144,13 @@ def get_chatbot_response(prompt, df, lang):
         if not api_key:
             return translations[lang]["chatbotError"]
         
-        # Set up Hugging Face Hub
+        # Set up Hugging Face Endpoint
         os.environ["HUGGINGFACEHUB_API_TOKEN"] = api_key
-        llm = HuggingFaceHub(
+        llm = HuggingFaceEndpoint(
             repo_id="facebook/bart-large",
             task="text2text-generation",
-            model_kwargs={"temperature": 0.5, "max_length": 150},
+            max_new_tokens=150,
+            temperature=0.5,
             huggingfacehub_api_token=api_key
         )
 
@@ -164,7 +165,7 @@ def get_chatbot_response(prompt, df, lang):
             data=data_summary,
             lang="English" if lang == "en" else "Marathi"
         )
-        response = llm(formatted_prompt)
+        response = llm.invoke(formatted_prompt)
         return response.strip()
     except Exception as e:
         return f"{translations[lang]['chatbotError']} Details: {str(e)}"
